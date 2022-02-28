@@ -22,7 +22,7 @@ function userPlay() {
 }
 
 // Compare player and computer choice 
-// return a string that declares the winner of the round like so: "You Lose! Paper beats Rock"
+
 function playRound(playerSelection, computerSelection) {
     const comp = computerSelection;
     const user = playerSelection;
