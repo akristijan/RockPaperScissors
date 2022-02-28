@@ -61,6 +61,7 @@ function showFinalScore(scoreUser, scoreComp) {
     }
 }
 
+// Start game
 //show result (3 possible results are: winner, loser or tie)
 function game() {
     // declare and initialize two variables for score tracking
