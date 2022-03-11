@@ -71,7 +71,7 @@ function playRound(e) {
     
 
 }
-
+//Something new
 // The function reports a winner or loser at the end 
 function showFinalScore(userScore, compScore) {
     const btns = document.querySelectorAll('buttons');
