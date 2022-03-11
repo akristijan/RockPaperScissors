@@ -1,4 +1,16 @@
+/* 
+Add an event listener to the buttons that call your playRound function with the correct playerSelection every time a button is clicked
+*/
+document.querySelector('#rock').addEventListener('click', playRound);
+document.querySelector('#paper').addEventListener('click', playRound);
+document.querySelector('#scissors').addEventListener('click', playRound);
 
+const placeToShowResult = document.querySelector('#placeToShowResult');
+const showScore = document.querySelector('#score');
+const placeToShowWinner = document.querySelector('#showWinner');
+//Track scores
+let userScore = 0;
+let compScore = 0;
 
 // Computer randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’
 function computerPlay() {
@@ -7,87 +19,73 @@ function computerPlay() {
     return options[randomChoice].toLowerCase();
 }
 
-// Ask user to choose one option for Play (rock, paper or scissors)
-function userPlay() {   
-    //Ask user to enter the choice until choice is not one of options rock, paper or scissors
-    let choice = '';
-    while( choice !== 'rock' && choice !== 'paper' && choice !== 'scissors' ) {
-
-        choice = prompt('Please enter your choice Rock, Paper or Scissors:').toLowerCase();
-
-    }
-
-    return choice;
-
-}
-
 // Compare player and computer choice 
 
-function playRound(playerSelection, computerSelection) {
+function playRound(e) {
+    placeToShowResult.innerText = ""; //clear befor new round
+    showScore.innerText = "";
+    //store user choice
+    let playerSelection = e.target.innerText.toLowerCase();
+    let computerSelection = computerPlay();
+
     const comp = computerSelection;
     const user = playerSelection;
-
-    if( comp === 'rock' && user === 'scissors'  ) {
+    
+    //Display the running score, and announce a winner of the game once one player reaches 5 points.
+    if(userScore < 5 && compScore < 5) 
+    {
         
-        return 0;
-    }
-    else if( comp === 'paper' && user === 'rock' ) {
+        if( comp === 'rock' && user === 'scissors'  ) {
         
-        return 0;
-    }
-    else if( comp === 'scissors' && user === 'paper' ) {
-        return 0;
-    }
-    else if( comp === user ) {
-        return `Tie! Computer choice ${comp} is same as user choice  ${user}`;
-    }
+            placeToShowResult.innerText = `You lose! You chose ${playerSelection} and computer choice was ${computerSelection}`;
+            compScore += 1;
+            showScore.innerText = `${userScore} : ${compScore}`;//show current score
+        }
+        else if( comp === 'paper' && user === 'rock' ) {
+            
+            placeToShowResult.innerText = `You lose! You chose ${playerSelection} and computer choice was ${computerSelection}`;
+            compScore += 1;
+            showScore.innerText = `${userScore} : ${compScore}`;//show current score
+        }
+        else if( comp === 'scissors' && user === 'paper' ) {
+            placeToShowResult.innerText = `You lose! You chose ${playerSelection} and computer choice was ${computerSelection}`;
+            compScore += 1;
+            showScore.innerText = `${userScore} : ${compScore}`;//show current score
+        }
+        else if( comp === user ) {
+            placeToShowResult.innerText = `Tie! Computer choice was: ${comp} is same as User choice:  ${user}`;
+            showScore.innerText = `${userScore} : ${compScore}`;//show current score
+        }
+        else {
+            
+            placeToShowResult.innerText = `You Win! You chose ${playerSelection}, comp chose ${computerSelection}`;
+            userScore += 1;
+            showScore.innerText = `${userScore} : ${compScore}`;//show current score
+        }
+    
+    } 
     else {
-        
-        return 1;
+        showFinalScore(userScore, compScore);
     }
+    
+    
 
 }
 
 // The function reports a winner or loser at the end 
-function showFinalScore(scoreUser, scoreComp) {
-    if(scoreUser > scoreComp) {
-        console.log(`You won. The result is ${scoreUser}:${scoreComp}`)
+function showFinalScore(userScore, compScore) {
+    const btns = document.querySelectorAll('buttons');
+    btns.forEach((btn) => btn.disabled = true);
+
+    if(userScore > compScore) {
+        placeToShowWinner.innerText = (`You won. The result is ${userScore}:${compScore}`);
     }
-    else if(scoreUser === scoreComp) {
-        console.log(`Tie. The result is ${scoreUser}:${scoreComp}`)
+    else if(userScore === compScore) {
+        placeToShowWinner.innerText = (`Tie. The result is ${userScore}:${compScore}`);
     }
     else {
-        console.log(`You lost. The result is ${scoreUser}:${scoreComp}`) 
+        placeToShowResult.innerText = (`You lost. The result is ${userScore}:${compScore}`);
     }
 }
 
-// Start game
-//show result (3 possible results are: winner, loser or tie)
-function game() {
-    // declare and initialize two variables for score tracking
-    let scoreUser = 0;
-    let scoreComp = 0;
 
-    // play a 5 round game that keeps score
-    for( let i = 0; i < 5; i++) {
-
-        let result = playRound(userPlay(), computerPlay());
-        
-        if(result === 0) {
-            console.log('You lose!');
-            scoreComp +=1;
-        }
-        else if(result === 1) {
-            console.log('You Win!');
-            scoreUser +=1;
-        }
-        else {
-            console.log('Tie!');
-        }
-    }
-    
-    // show final winner or loser
-    showFinalScore(scoreUser, scoreComp)
-    
-    
-}
