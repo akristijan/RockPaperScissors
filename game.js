@@ -1,5 +1,5 @@
 /* 
-Add an event listener to the buttons that call your playRound function with the correct playerSelection every time a button is clicked
+Add an event listener to the buttons that call your playRound function with the correct user every time a button is clicked
 */
 document.querySelector('#rock').addEventListener('click', playRound);
 document.querySelector('#paper').addEventListener('click', playRound);
@@ -8,6 +8,7 @@ document.querySelector('#scissors').addEventListener('click', playRound);
 const placeToShowResult = document.querySelector('#placeToShowResult');
 const showScore = document.querySelector('#score');
 const placeToShowWinner = document.querySelector('#showWinner');
+
 //Track scores
 let userScore = 0;
 let compScore = 0;
@@ -30,16 +31,11 @@ function clearTextBeforeRound() {
 
 function playRound(e) {
     //clear befor new round
-    placeToShowResult.innerText = ""; 
-    showScore.innerText = "";
+    clearTextBeforeRound();
 
     //store user choice
-    let playerSelection = e.target.id;
-    console.log(e.target.id)
-    let computerSelection = computerPlay();
-
-    const comp = computerSelection;
-    const user = playerSelection;
+    let user = e.target.id;
+    let comp = computerPlay();
     
     //Display the running score, and announce a winner of the game once one player reaches 5 points.
     if(userScore < 5 && compScore < 5) 
@@ -47,7 +43,7 @@ function playRound(e) {
         
         if( comp === 'rock' && user === 'scissors'  || comp === 'paper' && user === 'rock' || comp === 'scissors' && user === 'paper') {
         
-            placeToShowResult.innerText = `You lose! You chose ${playerSelection} and the Computer chose ${computerSelection}`;
+            placeToShowResult.innerText = `You lose! You chose ${user} and the Computer chose ${comp}`;
             compScore += 1;
             showScore.innerText = `${userScore} : ${compScore}`;//show current score
         }
@@ -58,7 +54,7 @@ function playRound(e) {
         }
         else {
             
-            placeToShowResult.innerText = `You Win! You chose ${playerSelection} and the Computer chose ${computerSelection}`;
+            placeToShowResult.innerText = `You Win! You chose ${user} and the Computer chose ${comp}`;
             userScore += 1;
             showScore.innerText = `${userScore} : ${compScore}`;//show current score
         }
@@ -77,15 +73,14 @@ function playRound(e) {
 //Something new
 // The function reports a winner or loser at the end 
 function showFinalScore(userScore, compScore) {
+    //Disable all buttons
     const btns = document.querySelectorAll('buttons');
     btns.forEach((btn) => btn.disabled = true);
 
     if(userScore > compScore) {
         placeToShowWinner.innerText = (`You won. The result is ${userScore}:${compScore}`);
     }
-    else if(userScore === compScore) {
-        placeToShowWinner.innerText = (`Tie. The result is ${userScore}:${compScore}`);
-    }
+    
     else {
         placeToShowResult.innerText = (`You lost. The result is ${userScore}:${compScore}`);
     }
