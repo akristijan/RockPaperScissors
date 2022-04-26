@@ -14,18 +14,28 @@ let compScore = 0;
 
 // Computer randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’
 function computerPlay() {
-    const options = ['Rock', 'Paper', 'Scissors'];
-    const randomChoice = Math.floor( Math.random() * options.length );
-    return options[randomChoice].toLowerCase();
+    
+    const randomChoice =  Math.random();
+    if(randomChoice < 0.33) return 'rock'
+    else if(randomChoice < 0.66) return 'paper'
+    else if(randomChoice < 0.99) return 'scissors';
+    
 }
 
+function clearTextBeforeRound() {
+    placeToShowResult.innerText = ""; //clear befor new round
+    showScore.innerText = "";
+}
 // Compare player and computer choice 
 
 function playRound(e) {
-    placeToShowResult.innerText = ""; //clear befor new round
+    //clear befor new round
+    placeToShowResult.innerText = ""; 
     showScore.innerText = "";
+
     //store user choice
-    let playerSelection = e.target.innerText.toLowerCase();
+    let playerSelection = e.target.id;
+    console.log(e.target.id)
     let computerSelection = computerPlay();
 
     const comp = computerSelection;
@@ -35,23 +45,13 @@ function playRound(e) {
     if(userScore < 5 && compScore < 5) 
     {
         
-        if( comp === 'rock' && user === 'scissors'  ) {
+        if( comp === 'rock' && user === 'scissors'  || comp === 'paper' && user === 'rock' || comp === 'scissors' && user === 'paper') {
         
             placeToShowResult.innerText = `You lose! You chose ${playerSelection} and computer choice was ${computerSelection}`;
             compScore += 1;
             showScore.innerText = `${userScore} : ${compScore}`;//show current score
         }
-        else if( comp === 'paper' && user === 'rock' ) {
-            
-            placeToShowResult.innerText = `You lose! You chose ${playerSelection} and computer choice was ${computerSelection}`;
-            compScore += 1;
-            showScore.innerText = `${userScore} : ${compScore}`;//show current score
-        }
-        else if( comp === 'scissors' && user === 'paper' ) {
-            placeToShowResult.innerText = `You lose! You chose ${playerSelection} and computer choice was ${computerSelection}`;
-            compScore += 1;
-            showScore.innerText = `${userScore} : ${compScore}`;//show current score
-        }
+        
         else if( comp === user ) {
             placeToShowResult.innerText = `Tie! Computer choice was: ${comp} is same as User choice:  ${user}`;
             showScore.innerText = `${userScore} : ${compScore}`;//show current score
@@ -64,8 +64,11 @@ function playRound(e) {
         }
     
     } 
+    
     else {
+        
         showFinalScore(userScore, compScore);
+        document.querySelector('.buttons').style.visibility='hidden';
     }
     
     

@@ -1,0 +1,33 @@
+body {
+    background-color: rgb(192, 191, 187);
+}
+.container > div {
+    
+    min-height: 35vh;
+    
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    
+
+}
+.buttons > * {
+    flex: 1;
+    max-width: 20%;
+}
+
+
+#results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+img {
+    max-width: 20%;
+}
