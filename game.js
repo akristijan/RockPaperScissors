@@ -47,18 +47,18 @@ function playRound(e) {
         
         if( comp === 'rock' && user === 'scissors'  || comp === 'paper' && user === 'rock' || comp === 'scissors' && user === 'paper') {
         
-            placeToShowResult.innerText = `You lose! You chose ${playerSelection} and computer choice was ${computerSelection}`;
+            placeToShowResult.innerText = `You lose! You chose ${playerSelection} and the Computer chose ${computerSelection}`;
             compScore += 1;
             showScore.innerText = `${userScore} : ${compScore}`;//show current score
         }
         
         else if( comp === user ) {
-            placeToShowResult.innerText = `Tie! Computer choice was: ${comp} is same as User choice:  ${user}`;
+            placeToShowResult.innerText = `Tie!`;
             showScore.innerText = `${userScore} : ${compScore}`;//show current score
         }
         else {
             
-            placeToShowResult.innerText = `You Win! You chose ${playerSelection}, comp chose ${computerSelection}`;
+            placeToShowResult.innerText = `You Win! You chose ${playerSelection} and the Computer chose ${computerSelection}`;
             userScore += 1;
             showScore.innerText = `${userScore} : ${compScore}`;//show current score
         }
